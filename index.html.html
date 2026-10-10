@@ -1,0 +1,874 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Grade 8 Mathematics - Round Table Challenge</title>
+
+<style>
+:root {
+  --navy: #243b64;
+  --blue: #4776c5;
+  --green: #23865b;
+  --purple: #7856a8;
+  --bg: #f5f7fc;
+  --text: #253047;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.6;
+}
+
+header {
+  background: linear-gradient(135deg, #243b64, #4776c5);
+  color: white;
+  text-align: center;
+  padding: 35px 18px;
+}
+
+header h1 {
+  margin: 0 0 8px;
+  font-size: clamp(25px, 5vw, 38px);
+}
+
+header p {
+  max-width: 850px;
+  margin: 8px auto;
+}
+
+.container {
+  width: min(1100px, 94%);
+  margin: 24px auto;
+}
+
+.panel {
+  background: white;
+  border-radius: 16px;
+  padding: 22px;
+  margin-bottom: 22px;
+  box-shadow: 0 4px 15px #17294a12;
+}
+
+h2 {
+  color: var(--navy);
+  margin-top: 0;
+}
+
+h3 {
+  margin-top: 0;
+}
+
+.competency {
+  background: #edf4ff;
+  border-left: 5px solid var(--blue);
+  border-radius: 10px;
+  padding: 15px;
+}
+
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.topic {
+  padding: 15px;
+  background: #f8f9ff;
+  border: 1px solid #e1e7f4;
+  border-radius: 12px;
+}
+
+.topic strong {
+  color: var(--navy);
+}
+
+.controls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+
+label {
+  font-weight: bold;
+}
+
+input, select, textarea {
+  font: inherit;
+  border: 1px solid #ccd4e3;
+  border-radius: 8px;
+  padding: 10px;
+  max-width: 100%;
+}
+
+button {
+  font: inherit;
+  font-weight: bold;
+  border: none;
+  border-radius: 9px;
+  padding: 11px 16px;
+  cursor: pointer;
+  transition: transform .15s;
+}
+
+button:hover {
+  transform: translateY(-1px);
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid #90b8ff;
+  outline-offset: 2px;
+}
+
+.primary {
+  background: var(--blue);
+  color: white;
+}
+
+.secondary {
+  background: #e9eef8;
+  color: var(--navy);
+}
+
+.success {
+  background: var(--green);
+  color: white;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.problem-card {
+  background: white;
+  border: 2px solid #e1e7f2;
+  border-radius: 15px;
+  padding: 18px;
+  min-width: 0;
+  box-shadow: 0 4px 12px #17294a0a;
+  overflow: hidden;
+}
+
+/* Different header colors for each card */
+.card-head {
+  padding: 15px;
+  margin: -18px -18px 15px;
+  border-radius: 12px 12px 0 0;
+  color: white;
+}
+
+.card-head h3 {
+  margin: 0 0 10px;
+  color: white;
+  font-size: 21px;
+}
+
+.card1 .card-head  { background: #2864b4; }
+.card2 .card-head  { background: #19836f; }
+.card3 .card-head  { background: #7546a8; }
+.card4 .card-head  { background: #bd5637; }
+.card5 .card-head  { background: #a43d67; }
+.card6 .card-head  { background: #4656a6; }
+.card7 .card-head  { background: #287d9c; }
+.card8 .card-head  { background: #8a6718; }
+.card9 .card-head  { background: #4f7540; }
+.card10 .card-head { background: #6650a0; }
+
+.student-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.student-fields label {
+  display: block;
+  font-size: 12px;
+  margin-bottom: 4px;
+  color: white;
+}
+
+.student-fields input {
+  width: 100%;
+  background: white;
+  color: #253047;
+  border: 1px solid #ffffff;
+}
+
+.category {
+  display: inline-block;
+  border-radius: 20px;
+  padding: 4px 10px;
+  font-size: 12px;
+  font-weight: bold;
+  background: #e9e0fa;
+  color: #644092;
+  margin-bottom: 10px;
+}
+
+.question {
+  min-height: 95px;
+  font-size: 16px;
+}
+
+.answer-label {
+  display: block;
+  margin: 12px 0 5px;
+}
+
+.answer-input {
+  width: 100%;
+}
+
+.hint {
+  font-size: 13px;
+  color: #67738a;
+  margin-top: 5px;
+}
+
+.feedback {
+  margin-top: 12px;
+  padding: 11px;
+  border-radius: 9px;
+  display: none;
+  overflow-wrap: anywhere;
+}
+
+.feedback.correct {
+  display: block;
+  color: #17643e;
+  background: #e4f7ec;
+}
+
+.feedback.incorrect {
+  display: block;
+  color: #922e2e;
+  background: #fff0f0;
+}
+
+.solution {
+  display: none;
+  margin-top: 12px;
+  background: #f5f2ff;
+  border-left: 4px solid var(--purple);
+  padding: 12px;
+  border-radius: 8px;
+}
+
+.solution.show {
+  display: block;
+}
+
+.progress-track {
+  height: 14px;
+  border-radius: 20px;
+  background: #e6eaf2;
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+.progress-bar {
+  height: 100%;
+  width: 0;
+  background: linear-gradient(90deg, #4776c5, #32a878);
+  transition: width .3s;
+}
+
+.score-number {
+  font-size: 27px;
+  color: var(--navy);
+  font-weight: bold;
+}
+
+.reflection-item {
+  margin-bottom: 18px;
+}
+
+.reflection-item label {
+  display: block;
+  margin-bottom: 7px;
+}
+
+.reflection-item textarea {
+  width: 100%;
+  min-height: 75px;
+  resize: vertical;
+}
+
+footer {
+  text-align: center;
+  padding: 25px 15px;
+  color: #667085;
+}
+
+@media (max-width: 700px) {
+  .card-grid, .topic-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .panel {
+    padding: 16px;
+  }
+
+  .student-fields {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media print {
+  body {
+    background: white;
+  }
+
+  header {
+    background: white;
+    color: black;
+    border-bottom: 2px solid #333;
+  }
+
+  .container {
+    width: 100%;
+  }
+
+  .panel, .problem-card {
+    box-shadow: none;
+    break-inside: avoid;
+  }
+
+  button, .controls, .answer-label, .answer-input,
+  .hint, #reflectionPanel {
+    display: none !important;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .solution {
+    display: block;
+  }
+
+  .card-head {
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <h1>Earn, Trade &amp; Solve!</h1>
+  <p><strong>Grade 8 Mathematics</strong></p>
+  <p>Round Table Cooperative Learning Challenge</p>
+  <p>Work together, take turns, and solve real-life financial problems.</p>
+</header>
+
+<main class="container">
+
+  <section class="panel">
+    <h2>Learning Competency</h2>
+
+    <div class="competency">
+      Solve financial problems involving:
+      <ol type="a">
+        <li>earning money;</li>
+        <li>profit and loss;</li>
+        <li>buying amounts of products that represent the best value
+            ("best buys"); and</li>
+        <li>buying on terms (installment plan).</li>
+      </ol>
+    </div>
+
+    <h2>How to Play: Round Table</h2>
+    <ol>
+      <li>Form a group with 5 to 10 students.</li>
+      <li>Choose the number of participating members below.</li>
+      <li>Each student enters their name on their assigned problem card.</li>
+      <li>Students take turns solving their assigned problems and sharing
+          their answers with the group.</li>
+      <li>Discuss your solutions and help one another understand the
+          computations.</li>
+      <li>Check your answers, review the solutions, and complete the
+          group reflection.</li>
+    </ol>
+
+    <p><strong>Reminder:</strong> All money amounts are in Philippine
+    pesos (₱). Enter the numerical answer requested on each card.</p>
+  </section>
+
+  <section class="panel">
+    <h2>Group Setup</h2>
+
+    <div class="controls">
+      <label for="groupSize">Number of students:</label>
+      <select id="groupSize" onchange="updateGroupSize()">
+        <option value="5">5 students</option>
+        <option value="6">6 students</option>
+        <option value="7">7 students</option>
+        <option value="8">8 students</option>
+        <option value="9">9 students</option>
+        <option value="10" selected>10 students</option>
+      </select>
+    </div>
+
+    <p class="hint">Each participating student should answer the card
+    with the matching student number.</p>
+  </section>
+
+  <section class="panel">
+    <h2>Four Financial Topics</h2>
+
+    <div class="topic-grid">
+      <div class="topic">
+        <strong>A. Earning Money</strong>
+        <p>Calculate wages, total earnings, and commission.</p>
+      </div>
+
+      <div class="topic">
+        <strong>B. Profit and Loss</strong>
+        <p>Compare selling price and cost price to determine profit or loss.</p>
+      </div>
+
+      <div class="topic">
+        <strong>C. Best Buys</strong>
+        <p>Compare prices and quantities to find the better value for money.</p>
+      </div>
+
+      <div class="topic">
+        <strong>D. Installment Plans</strong>
+        <p>Calculate total installment payments and additional costs.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="panel" id="scorePanel">
+    <h2>Group Scoreboard</h2>
+
+    <div class="score-number" id="scoreText">0 / 10 correct</div>
+
+    <div class="progress-track">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <p id="progressMessage">Start solving to track your group's progress.</p>
+
+    <div class="controls">
+      <button class="primary" onclick="checkAllAnswers()">Check Group Answers</button>
+      <button class="secondary" onclick="toggleAllSolutions()">Show/Hide All Solutions</button>
+      <button class="secondary" onclick="resetActivity()">Try Again</button>
+    </div>
+  </section>
+
+  <section class="card-grid" id="cardGrid"></section>
+
+  <section class="panel" id="reflectionPanel">
+    <h2>Group Reflection</h2>
+    <p>Discuss the questions together, then write your group's answers.</p>
+
+    <div class="reflection-item">
+      <label for="reflection1">1. Which problem was the most challenging?
+      How did your group solve it?</label>
+      <textarea id="reflection1" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="reflection-item">
+      <label for="reflection2">2. How can these financial calculations
+      help people in everyday life?</label>
+      <textarea id="reflection2" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="reflection-item">
+      <label for="reflection3">3. How did taking turns help every
+      member participate?</label>
+      <textarea id="reflection3" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="reflection-item">
+      <label for="reflection4">4. What did your group do when members
+      had different answers?</label>
+      <textarea id="reflection4" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="reflection-item">
+      <label for="reflection5">5. What did you learn about earning money,
+      profit and loss, best buys, and installment plans?</label>
+      <textarea id="reflection5" placeholder="Write your answer here..."></textarea>
+    </div>
+
+    <div class="controls">
+      <button class="success" onclick="downloadReflection()">Download Group Reflection</button>
+      <button class="secondary" onclick="window.print()">Print Activity</button>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  Grade 8 Mathematics | Round Table Cooperative Learning Structure
+  <br>Learn together. Solve together. Grow together.
+</footer>
+
+<script>
+const problems = [
+  {
+    category: "A. Earning Money",
+    question: "Mika earns ₱90 per hour as a student assistant. If Mika works for 5 hours, how much does Mika earn?",
+    answer: 450,
+    unit: "pesos",
+    solution: "Earnings = hourly rate × number of hours. ₱90 × 5 = ₱450. Mika earns ₱450."
+  },
+  {
+    category: "A. Earning Money",
+    question: "Carlo earns ₱250 per day for helping in a store. How much will he earn in 6 days if he works every day?",
+    answer: 1500,
+    unit: "pesos",
+    solution: "Total earnings = daily wage × number of days. ₱250 × 6 = ₱1,500."
+  },
+  {
+    category: "A. Earning Money",
+    question: "Liza sells products worth ₱8,000 and receives a 5% commission. How much commission does she earn?",
+    answer: 400,
+    unit: "pesos",
+    solution: "Commission = sales × commission rate. ₱8,000 × 0.05 = ₱400."
+  },
+  {
+    category: "B. Profit and Loss",
+    question: "A student buys a bag for ₱350 and sells it for ₱470. How much is the profit?",
+    answer: 120,
+    unit: "pesos",
+    solution: "Profit = selling price − cost price. ₱470 − ₱350 = ₱120 profit."
+  },
+  {
+    category: "B. Profit and Loss",
+    question: "A seller buys a pair of shoes for ₱900 but sells it for ₱750. How much is the loss?",
+    answer: 150,
+    unit: "pesos",
+    solution: "Loss = cost price − selling price. ₱900 − ₱750 = ₱150 loss."
+  },
+  {
+    category: "B. Profit and Loss",
+    question: "A vendor buys 20 notebooks for ₱25 each and sells all of them for ₱700. What is the total profit?",
+    answer: 200,
+    unit: "pesos",
+    solution: "Total cost = 20 × ₱25 = ₱500. Profit = ₱700 − ₱500 = ₱200."
+  },
+  {
+    category: "C. Best Buys",
+    question: "Store A sells 3 notebooks for ₱90, while Store B sells 5 notebooks for ₱140. Which store has the lower price per notebook? Enter 1 for Store A or 2 for Store B.",
+    answer: 2,
+    unit: "store number",
+    solution: "Store A: ₱90 ÷ 3 = ₱30 per notebook. Store B: ₱140 ÷ 5 = ₱28 per notebook. Store B is the better buy, so enter 2."
+  },
+  {
+    category: "C. Best Buys",
+    question: "Pack A contains 2 kilograms of rice for ₱110. Pack B contains 3 kilograms for ₱156. Which pack has the lower price per kilogram? Enter 1 for Pack A or 2 for Pack B.",
+    answer: 2,
+    unit: "pack number",
+    solution: "Pack A: ₱110 ÷ 2 = ₱55 per kilogram. Pack B: ₱156 ÷ 3 = ₱52 per kilogram. Pack B is the better buy, so enter 2."
+  },
+  {
+    category: "D. Installment Plans",
+    question: "A phone costs ₱6,000 in cash. Under an installment plan, the buyer pays ₱1,000 down and 5 monthly payments of ₱1,100. What is the total installment cost?",
+    answer: 6500,
+    unit: "pesos",
+    solution: "Total installment cost = down payment + all monthly payments. ₱1,000 + (5 × ₱1,100) = ₱6,500."
+  },
+  {
+    category: "D. Installment Plans",
+    question: "A refrigerator costs ₱12,000 in cash. Its installment plan requires a ₱2,000 down payment and 10 monthly payments of ₱1,100. How much more does the installment plan cost than the cash price?",
+    answer: 1000,
+    unit: "pesos",
+    solution: "Total installment cost = ₱2,000 + (10 × ₱1,100) = ₱13,000. Additional cost = ₱13,000 − ₱12,000 = ₱1,000."
+  }
+];
+
+const grid = document.getElementById("cardGrid");
+
+function renderCards() {
+  grid.innerHTML = "";
+
+  problems.forEach((problem, index) => {
+    const cardNumber = index + 1;
+    const card = document.createElement("article");
+
+    card.className = `problem-card card${cardNumber}`;
+    card.id = `card${cardNumber}`;
+
+    card.innerHTML = `
+      <div class="card-head">
+        <h3>Student ${cardNumber}</h3>
+
+        <div class="student-fields">
+          <div>
+            <label for="name${cardNumber}">Student name</label>
+            <input id="name${cardNumber}" type="text"
+                   placeholder="Enter name" autocomplete="off">
+          </div>
+
+          <div>
+            <label for="number${cardNumber}">Card number</label>
+            <input id="number${cardNumber}" value="${cardNumber}" readonly>
+          </div>
+        </div>
+      </div>
+
+      <span class="category">${problem.category}</span>
+
+      <div class="question">
+        <strong>Problem ${cardNumber}:</strong> ${problem.question}
+      </div>
+
+      <label class="answer-label" for="answer${cardNumber}">
+        Your answer (${problem.unit})
+      </label>
+
+      <input class="answer-input" id="answer${cardNumber}"
+             type="number" step="any" placeholder="Enter numerical answer">
+
+      <p class="hint">Solve the problem first, then share your answer with your group.</p>
+
+      <div class="controls">
+        <button class="primary" onclick="checkAnswer(${index})">Check Answer</button>
+        <button class="secondary" onclick="toggleSolution(${index})">Show Solution</button>
+      </div>
+
+      <div class="feedback" id="feedback${cardNumber}" aria-live="polite"></div>
+
+      <div class="solution" id="solution${cardNumber}">
+        <strong>Solution:</strong> ${problem.solution}
+      </div>
+    `;
+
+    grid.appendChild(card);
+  });
+
+  updateGroupSize();
+}
+
+function updateGroupSize() {
+  const size = Number(document.getElementById("groupSize").value);
+
+  problems.forEach((problem, index) => {
+    document.getElementById(`card${index + 1}`).style.display =
+      index < size ? "block" : "none";
+  });
+
+  updateScore();
+}
+
+function getNumericAnswer(index) {
+  const input = document.getElementById(`answer${index + 1}`);
+
+  if (input.value.trim() === "") return null;
+
+  const answer = Number(input.value);
+  return Number.isFinite(answer) ? answer : null;
+}
+
+function checkAnswer(index) {
+  const size = Number(document.getElementById("groupSize").value);
+  if (index >= size) return;
+
+  const problem = problems[index];
+  const studentName =
+    document.getElementById(`name${index + 1}`).value.trim();
+  const answer = getNumericAnswer(index);
+  const feedback = document.getElementById(`feedback${index + 1}`);
+
+  feedback.className = "feedback";
+
+  if (answer === null) {
+    feedback.textContent = "Please enter your answer first.";
+    feedback.classList.add("incorrect");
+    return;
+  }
+
+  if (Math.abs(answer - problem.answer) < 0.000001) {
+    feedback.textContent =
+      `${studentName ? studentName + ", " : ""}Correct! Well done.`;
+    feedback.classList.add("correct");
+  } else {
+    feedback.textContent =
+      `${studentName ? studentName + ", " : ""}Not quite. Review your computation and try again.`;
+    feedback.classList.add("incorrect");
+  }
+
+  updateScore();
+}
+
+function checkAllAnswers() {
+  const size = Number(document.getElementById("groupSize").value);
+
+  for (let index = 0; index < size; index++) {
+    checkAnswer(index);
+  }
+
+  document.getElementById("scorePanel").scrollIntoView({
+    behavior: "smooth",
+    block: "start"
+  });
+}
+
+function updateScore() {
+  const size = Number(document.getElementById("groupSize").value);
+  let correct = 0;
+  let answered = 0;
+
+  for (let index = 0; index < size; index++) {
+    const answer = getNumericAnswer(index);
+
+    if (answer !== null) answered++;
+
+    if (answer !== null &&
+        Math.abs(answer - problems[index].answer) < 0.000001) {
+      correct++;
+    }
+  }
+
+  document.getElementById("scoreText").textContent =
+    `${correct} / ${size} correct`;
+
+  document.getElementById("progressBar").style.width =
+    `${(correct / size) * 100}%`;
+
+  document.getElementById("progressMessage").textContent =
+    answered === 0
+      ? "Start solving to track your group's progress."
+      : `${answered} of ${size} students have entered an answer. Keep working together.`;
+}
+
+function toggleSolution(index) {
+  const solution = document.getElementById(`solution${index + 1}`);
+  const button = document.querySelector(
+    `#card${index + 1} .controls button:nth-child(2)`
+  );
+
+  solution.classList.toggle("show");
+
+  button.textContent = solution.classList.contains("show")
+    ? "Hide Solution"
+    : "Show Solution";
+}
+
+function toggleAllSolutions() {
+  const size = Number(document.getElementById("groupSize").value);
+
+  const anyHidden = problems.slice(0, size).some((problem, index) =>
+    !document.getElementById(`solution${index + 1}`).classList.contains("show")
+  );
+
+  for (let index = 0; index < size; index++) {
+    const solution = document.getElementById(`solution${index + 1}`);
+    const button = document.querySelector(
+      `#card${index + 1} .controls button:nth-child(2)`
+    );
+
+    solution.classList.toggle("show", anyHidden);
+    button.textContent = anyHidden ? "Hide Solution" : "Show Solution";
+  }
+}
+
+function resetActivity() {
+  if (!confirm("Reset all answers, names, feedback, and reflection responses?")) {
+    return;
+  }
+
+  problems.forEach((problem, index) => {
+    document.getElementById(`name${index + 1}`).value = "";
+    document.getElementById(`answer${index + 1}`).value = "";
+
+    const feedback = document.getElementById(`feedback${index + 1}`);
+    feedback.textContent = "";
+    feedback.className = "feedback";
+
+    document.getElementById(`solution${index + 1}`).classList.remove("show");
+
+    document.querySelector(
+      `#card${index + 1} .controls button:nth-child(2)`
+    ).textContent = "Show Solution";
+  });
+
+  for (let index = 1; index <= 5; index++) {
+    document.getElementById(`reflection${index}`).value = "";
+  }
+
+  updateScore();
+}
+
+function downloadReflection() {
+  const size = Number(document.getElementById("groupSize").value);
+
+  let content =
+    "GRADE 8 MATHEMATICS\n" +
+    "ROUND TABLE COOPERATIVE LEARNING CHALLENGE\n" +
+    "GROUP REFLECTION\n\nGROUP MEMBERS\n";
+
+  for (let index = 1; index <= size; index++) {
+    const name = document.getElementById(`name${index}`).value.trim();
+    content += `Student ${index}: ${name || "Not provided"}\n`;
+  }
+
+  content += "\nREFLECTION ANSWERS\n\n";
+
+  const questions = [
+    "1. Which problem was the most challenging? How did your group solve it?",
+    "2. How can these financial calculations help people in everyday life?",
+    "3. How did taking turns help every member participate?",
+    "4. What did your group do when members had different answers?",
+    "5. What did you learn about earning money, profit and loss, best buys, and installment plans?"
+  ];
+
+  questions.forEach((question, index) => {
+    const answer =
+      document.getElementById(`reflection${index + 1}`).value.trim();
+
+    content += `${question}\n${answer || "No answer provided"}\n\n`;
+  });
+
+  let score = 0;
+
+  for (let index = 0; index < size; index++) {
+    const answer = getNumericAnswer(index);
+
+    if (answer !== null &&
+        Math.abs(answer - problems[index].answer) < 0.000001) {
+      score++;
+    }
+  }
+
+  content += `GROUP SCORE: ${score}/${size}\n`;
+
+  const blob = new Blob(["\uFEFF" + content], {
+    type: "text/plain;charset=utf-8"
+  });
+
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = "Grade8_RoundTable_GroupReflection.txt";
+  link.click();
+
+  URL.revokeObjectURL(url);
+}
+
+renderCards();
+</script>
+</body>
+</html>
